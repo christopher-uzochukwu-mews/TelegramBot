@@ -107,19 +107,20 @@ If your laptop sleeps and you want reminders to always fire, run the bot on a **
 ### Option D: Fly.io (free tier)
 
 1. Install [flyctl](https://fly.io/docs/hands-on/install-flyctl/) and log in: `fly auth login`.
-2. From the project directory: `fly launch` (use the existing `fly.toml`; choose an app name or accept the default).
-3. **Set your Telegram token as a secret** (Fly has no `.env` file – if you skip this, the app will exit and deploy will fail):
-   ```bash
-   fly secrets set TELEGRAM_BOT_TOKEN=your_bot_token_here
-   ```
+2. **Pick a unique app name** – Fly app names are global. Edit `fly.toml` and set `app = "something-unique"` (e.g. `mba-bot-yourname` or `yourname-mba-reminder`). Use only lowercase letters, numbers, and hyphens.
+3. From the project directory: `fly launch` (answer the prompts; say no to PostgreSQL if asked).
+4. **Set your Telegram token:** `fly secrets set TELEGRAM_BOT_TOKEN=your_bot_token_here`  
    Optional: `fly secrets set ALLOWED_CHAT_IDS=her_chat_id`
-4. Deploy: `fly deploy`
+5. Deploy: `fly deploy`
+
+**If you see "failed to create app":**
+
+- The app name in `fly.toml` is already taken. Edit `fly.toml` and change `app = "..."` to a unique name (e.g. `mba-bot-jane-doe` or `mba-reminder-xyz99`), then run `fly launch` again.
 
 **If you see "unable to deploy" or the app crashes:**
 
-- **Set the token:** The bot exits immediately if `TELEGRAM_BOT_TOKEN` is missing. Run `fly secrets set TELEGRAM_BOT_TOKEN=<token>` then `fly deploy` again.
-- **Check logs:** `fly logs` – you should see "Bot running. Reminders at ..." and no Python traceback.
-- **App name:** If "mba-telegram-bot" is taken, run `fly launch` and pick a different app name, or edit `app = "..."` in `fly.toml`.
+- **Set the token:** Run `fly secrets set TELEGRAM_BOT_TOKEN=<token>` then `fly deploy` again.
+- **Check logs:** `fly logs` – you should see "Bot running. Reminders at ...".
 
 Reminders use Vancouver time (8pm Pacific) by default via `TZ=America/Vancouver` in `fly.toml`.
 

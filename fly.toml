@@ -1,8 +1,11 @@
 # Fly.io app config for MBA Telegram Bot
 # Deploy: fly deploy
 # Set secrets first: fly secrets set TELEGRAM_BOT_TOKEN=your_token
+#
+# App name must be UNIQUE across all of Fly.io. If "failed to create app", change
+# to something like: mba-bot-yourname or yourname-mba-reminder (lowercase, hyphens only).
 
-app = "mba-telegram-bot"
+app = "mba-bot-christopher-mews"
 
 [build]
   dockerfile = "Dockerfile"
