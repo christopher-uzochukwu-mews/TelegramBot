@@ -40,13 +40,40 @@ SUBSCRIBERS_PATH = Path(__file__).parent / "subscribers.json"
 
 
 def _run_health_server(port: int) -> None:
+    ROOT_HTML = b"""<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MBA Schedule Bot</title></head>
+<body style="font-family:system-ui,sans-serif;max-width:32rem;margin:3rem auto;padding:0 1rem;color:#333;">
+<h1 style="font-size:1.25rem;">MBA Schedule Telegram Bot</h1>
+<p>This app is running. It sends daily reminders and answers commands in Telegram.</p>
+<p>Use the bot inside Telegram; this URL is only for health checks and status.</p>
+<p style="margin-top:2rem;font-size:0.9rem;color:#666;"><a href="/health">/health</a> &rarr; {"status":"ok"} &nbsp; <a href="/love">/love</a> &rarr; for Chiamaka</p>
+</body></html>
+"""
+    love_page_path = Path(__file__).parent / "chiamaka-page" / "index.html"
+    try:
+        LOVE_HTML = love_page_path.read_bytes()
+    except OSError:
+        LOVE_HTML = None
+
     class HealthHandler(BaseHTTPRequestHandler):
         def do_GET(self):
-            if self.path == "/health" or self.path == "/health/":
+            path = self.path.split("?")[0].rstrip("/") or "/"
+            if path == "/health":
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.end_headers()
                 self.wfile.write(b'{"status":"ok"}')
+            elif path == "/":
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(ROOT_HTML)
+            elif path in ("/love", "/chiamaka") and LOVE_HTML is not None:
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html; charset=utf-8")
+                self.end_headers()
+                self.wfile.write(LOVE_HTML)
             else:
                 self.send_response(404)
                 self.end_headers()
