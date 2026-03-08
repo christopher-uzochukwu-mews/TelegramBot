@@ -102,7 +102,26 @@ If your laptop sleeps and you want reminders to always fire, run the bot on a **
    ```
 5. Reminders run 24/7. With Docker, the app uses **America/Vancouver** by default, so `REMINDER_HOUR=20` = 8pm Vancouver/BC. On a bare server (no Docker) set `TZ=America/Vancouver` in the environment if you want 8pm Pacific.
 
-**Other free options:** Google Cloud or AWS free tier (small VM), or Fly.io free allowance – same idea: Linux + Docker + this repo + `.env`.
+**Other free options:** Google Cloud or AWS free tier (small VM) – same idea: Linux + Docker + this repo + `.env`.
+
+### Option D: Fly.io (free tier)
+
+1. Install [flyctl](https://fly.io/docs/hands-on/install-flyctl/) and log in: `fly auth login`.
+2. From the project directory: `fly launch` (use the existing `fly.toml`; choose an app name or accept the default).
+3. **Set your Telegram token as a secret** (Fly has no `.env` file – if you skip this, the app will exit and deploy will fail):
+   ```bash
+   fly secrets set TELEGRAM_BOT_TOKEN=your_bot_token_here
+   ```
+   Optional: `fly secrets set ALLOWED_CHAT_IDS=her_chat_id`
+4. Deploy: `fly deploy`
+
+**If you see "unable to deploy" or the app crashes:**
+
+- **Set the token:** The bot exits immediately if `TELEGRAM_BOT_TOKEN` is missing. Run `fly secrets set TELEGRAM_BOT_TOKEN=<token>` then `fly deploy` again.
+- **Check logs:** `fly logs` – you should see "Bot running. Reminders at ..." and no Python traceback.
+- **App name:** If "mba-telegram-bot" is taken, run `fly launch` and pick a different app name, or edit `app = "..."` in `fly.toml`.
+
+Reminders use Vancouver time (8pm Pacific) by default via `TZ=America/Vancouver` in `fly.toml`.
 
 ---
 
