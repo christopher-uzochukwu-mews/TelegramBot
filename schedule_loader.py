@@ -19,18 +19,16 @@ def get_events_tomorrow(schedule: list[dict], from_date: date | None = None) -> 
     return get_events_on(schedule, tomorrow)
 
 def get_events_this_week(schedule: list[dict], from_date: date | None = None) -> list[dict]:
-    """Events in the calendar week (Mon–Sun) that contains today."""
+    """Events from today through the next 6 days (next 7 days including today)."""
     from_date = from_date or date.today()
-    # Monday = 0, Sunday = 6
-    start = from_date - timedelta(days=from_date.weekday())
-    end = start + timedelta(days=6)
+    end = from_date + timedelta(days=6)
     result = []
     for e in schedule:
         try:
             ed = date.fromisoformat(e["date"])
         except (KeyError, ValueError):
             continue
-        if start <= ed <= end:
+        if from_date <= ed <= end:
             result.append(e)
     result.sort(key=lambda x: (x["date"], x.get("course", ""), x.get("title", "")))
     return result

@@ -60,13 +60,13 @@ def format_tomorrow_message(schedule: list[dict], from_date: date | None = None)
 def format_week_message(schedule: list[dict], from_date: date | None = None) -> str:
     events = get_events_this_week(schedule, from_date)
     if not events:
-        return "This week: no events in the schedule. Enjoy the breather!"
+        return "Next 7 days: no events in the schedule. Enjoy the breather!"
     # Group by date
     by_date: dict[str, list[dict]] = {}
     for ev in events:
         d = ev.get("date", "")
         by_date.setdefault(d, []).append(ev)
-    lines = ["📅 *This week*\n"]
+    lines = ["📅 *Next 7 days*\n"]
     for d in sorted(by_date.keys()):
         try:
             dt = date.fromisoformat(d)
