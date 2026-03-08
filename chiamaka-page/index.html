@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Chiamaka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #faf8f5;
+      --rose: #8b4d5a;
+      --rose-light: #b87a85;
+      --gold: #c9a962;
+      --charcoal: #2c2522;
+      --muted: #6b5f5a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      min-height: 100%;
+    }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      background-image:
+        radial-gradient(ellipse 120% 80% at 50% 0%, rgba(201, 169, 98, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 80% 90%, rgba(139, 77, 90, 0.06) 0%, transparent 50%);
+    }
+
+    main {
+      max-width: 36rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    .dedication {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--charcoal);
+      margin-bottom: 2.5rem;
+    }
+
+    .dedication .name {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 600;
+      color: var(--rose);
+      letter-spacing: 0.02em;
+      display: block;
+      margin-top: 0.35em;
+    }
+
+    .dedication .tagline {
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95em;
+      margin-top: 0.5em;
+    }
+
+    .divider {
+      width: 4rem;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 2rem;
+      opacity: 0.8;
+    }
+
+    .quote-block {
+      padding: 1.5rem 1rem;
+      border-left: 3px solid var(--rose-light);
+      background: rgba(139, 77, 90, 0.04);
+      border-radius: 0 8px 8px 0;
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    .quote-text {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      font-style: italic;
+      color: var(--charcoal);
+    }
+
+    .quote-refresh {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 1.5rem;
+      font-style: normal;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="dedication">
+      This URL is dedicated to
+      <span class="name">Chiamaka</span>
+      <span class="tagline">the love of my life</span>
+    </p>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="quote-block">
+      <p class="quote-text" id="quote"></p>
+      <p class="quote-refresh">Refresh the page for another quote.</p>
+    </div>
+  </main>
+  <footer>Forever yours</footer>
+  <script>
+    const quotes = [
+      "You are my heart, my life, my one and only thought. — Arthur Conan Doyle",
+      "I love you not only for what you are, but for what I am when I am with you. — Elizabeth Barrett Browning",
+      "In you I’ve found the love of my life and my closest, truest friend. — Unknown",
+      "I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more. — Angelita Lim",
+      "Love is composed of a single soul inhabiting two bodies. — Aristotle",
+      "You are the finest, loveliest, tenderest, and most beautiful person I have ever known. — F. Scott Fitzgerald",
+      "I choose you. And I’ll choose you over and over. Without pause, without a doubt. — Unknown",
+      "Grow old along with me; the best is yet to be. — Robert Browning",
+      "I have found the one whom my soul loves. — Song of Solomon",
+      "Every love story is beautiful, but ours is my favourite. — Unknown",
+      "I love you more than I have ever found a way to say to you. — Ben Folds",
+      "You are my today and all of my tomorrows. — Leo Christopher",
+      "I love you like certain dark things are to be loved, in secret, between the shadow and the soul. — Pablo Neruda",
+      "To love and be loved is to feel the sun from both sides. — David Viscott",
+      "I would rather spend one lifetime with you than face all the ages of this world alone. — J.R.R. Tolkien",
+      "Whatever our souls are made of, his and mine are the same. — Emily Brontë",
+      "I love you not because of who you are, but because of who I am when I am with you. — Roy Croft",
+      "You are my sun, my moon, and all my stars. — E.E. Cummings",
+      "I fell in love with her courage, her sincerity, and her flaming self-respect. — F. Scott Fitzgerald",
+      "The best thing to hold onto in life is each other. — Audrey Hepburn"
+    ];
+
+    function pickQuote() {
+      const i = Math.floor(Math.random() * quotes.length);
+      document.getElementById('quote').textContent = quotes[i];
+    }
+
+    pickQuote();
+  </script>
+</body>
+</html>

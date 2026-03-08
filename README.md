@@ -106,16 +106,21 @@ If your laptop sleeps and you want reminders to always fire, run the bot on a **
 
 ### Option D: Fly.io (free tier)
 
-1. Install [flyctl](https://fly.io/docs/hands-on/install-flyctl/) and log in: `fly auth login`.
-2. **Pick a unique app name** – Fly app names are global. Edit `fly.toml` and set `app = "something-unique"` (e.g. `mba-bot-yourname` or `yourname-mba-reminder`). Use only lowercase letters, numbers, and hyphens.
-3. From the project directory: `fly launch` (answer the prompts; say no to PostgreSQL if asked).
-4. **Set your Telegram token:** `fly secrets set TELEGRAM_BOT_TOKEN=your_bot_token_here`  
+1. Install flyctl and log in: `fly auth login`.  
+   **Mac (no Homebrew):** `curl -L https://fly.io/install.sh | sh` then add `~/.fly/bin` to your PATH (the script may prompt you).  
+   **Mac (with Homebrew):** `brew install flyctl`.  
+   Then run `fly version` to confirm; update from [fly.io/docs/flyctl/install](https://fly.io/docs/flyctl/install) if needed.
+2. From the project directory run **`fly launch`**.  
+   When it asks **"Choose an app name"**, type something **unique** (e.g. `mba-bot-yourname-99` or use the random name Fly suggests). Lowercase, numbers, hyphens only. Say **no** to PostgreSQL and any optional services.
+3. **Set your Telegram token:** `fly secrets set TELEGRAM_BOT_TOKEN=your_bot_token_here`  
    Optional: `fly secrets set ALLOWED_CHAT_IDS=her_chat_id`
-5. Deploy: `fly deploy`
+4. Deploy: `fly deploy`
 
-**If you see "failed to create app":**
+**If you still see "failed to create app":**
 
-- The app name in `fly.toml` is already taken. Edit `fly.toml` and change `app = "..."` to a unique name (e.g. `mba-bot-jane-doe` or `mba-reminder-xyz99`), then run `fly launch` again.
+- **Name taken:** Try a different name when Fly asks (e.g. add numbers: `mba-bot-cu-2026`).
+- **Payment method:** Fly often requires a card on file even for free tier. Add one at [fly.io/dashboard](https://fly.io/dashboard) → Account → Billing; you won’t be charged if you stay within free limits.
+- **See the real error:** Run `fly apps create test-mba-bot-xyz123` in a terminal. If it fails, the message (e.g. “payment required” or “name taken”) will tell you what’s wrong.
 
 **If you see "unable to deploy" or the app crashes:**
 
