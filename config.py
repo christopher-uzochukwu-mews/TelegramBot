@@ -13,12 +13,26 @@ def get_allowed_chat_ids():
     raw = os.getenv("ALLOWED_CHAT_IDS", "").strip()
     if not raw:
         return None
-    return [int(x.strip()) for x in raw.split(",") if x.strip()]
+    ids = []
+    for x in raw.split(","):
+        x = x.strip()
+        if not x:
+            continue
+        try:
+            ids.append(int(x))
+        except ValueError:
+            pass
+    return ids if ids else None
 
 ALLOWED_CHAT_IDS = get_allowed_chat_ids()
 SCHEDULE_PATH = Path(__file__).parent / "schedule.json"
 # When to send "tomorrow's" reminder (hour in 24h, server local time)
-REMINDER_HOUR = int(os.getenv("REMINDER_HOUR", "20"))  # 8pm
-REMINDER_MINUTE = int(os.getenv("REMINDER_MINUTE", "0"))
+def _int_env(name: str, default: str) -> int:
+    try:
+        return int(os.getenv(name, default).strip())
+    except (ValueError, AttributeError):
+        return int(default)
+REMINDER_HOUR = _int_env("REMINDER_HOUR", "20")  # 8pm
+REMINDER_MINUTE = _int_env("REMINDER_MINUTE", "0")
 # Health check HTTP server (for Docker / monitoring)
-HEALTH_CHECK_PORT = int(os.getenv("HEALTH_CHECK_PORT", "8080"))
+HEALTH_CHECK_PORT = _int_env("HEALTH_CHECK_PORT", "8080")

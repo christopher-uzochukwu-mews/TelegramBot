@@ -106,12 +106,24 @@ If your laptop sleeps and you want reminders to always fire, run the bot on a **
 
 ### Option D: Fly.io (free tier)
 
-1. Install flyctl and log in: `fly auth login`.  
-   **Mac (no Homebrew):** `curl -L https://fly.io/install.sh | sh` then add `~/.fly/bin` to your PATH (the script may prompt you).  
-   **Mac (with Homebrew):** `brew install flyctl`.  
-   Then run `fly version` to confirm; update from [fly.io/docs/flyctl/install](https://fly.io/docs/flyctl/install) if needed.
-2. From the project directory run **`fly launch`**.  
-   When it asks **"Choose an app name"**, type something **unique** (e.g. `mba-bot-yourname-99` or use the random name Fly suggests). Lowercase, numbers, hyphens only. Say **no** to PostgreSQL and any optional services.
+**Install flyctl (run these in your terminal):**
+
+- **Mac without Homebrew:**  
+  ```bash
+  curl -L https://fly.io/install.sh | sh
+  ```  
+  Then add flyctl to your PATH. Either let the script add it when it asks, or run once:
+  ```bash
+  echo 'export PATH="$HOME/.fly/bin:$PATH"' >> ~/.zshrc && source ~/.zshrc
+  ```
+- **Mac with Homebrew:** `brew install flyctl`
+
+Check it worked: `fly version`. Then log in: `fly auth login`.
+
+**Deploy steps:**
+
+1. In the project directory run: `fly launch`
+2. When it asks **"Choose an app name"**, type something **unique** (e.g. `mba-bot-yourname-99`). Lowercase, numbers, hyphens only. Say **no** to PostgreSQL.
 3. **Set your Telegram token:** `fly secrets set TELEGRAM_BOT_TOKEN=your_bot_token_here`  
    Optional: `fly secrets set ALLOWED_CHAT_IDS=her_chat_id`
 4. Deploy: `fly deploy`

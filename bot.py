@@ -40,7 +40,7 @@ SUBSCRIBERS_PATH = Path(__file__).parent / "subscribers.json"
 
 
 def _run_health_server(port: int) -> None:
-    ROOT_HTML = b"""<!DOCTYPE html>
+    ROOT_HTML = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MBA Schedule Bot</title>
 <style>
@@ -62,6 +62,7 @@ def _run_health_server(port: int) -> None:
 </div>
 </body></html>
 """
+    ROOT_HTML_BYTES = ROOT_HTML.encode("utf-8")
     love_page_path = Path(__file__).parent / "chiamaka-page" / "index.html"
     try:
         LOVE_HTML = love_page_path.read_bytes()
@@ -80,7 +81,7 @@ def _run_health_server(port: int) -> None:
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
                 self.end_headers()
-                self.wfile.write(ROOT_HTML)
+                self.wfile.write(ROOT_HTML_BYTES)
             elif path in ("/love", "/chiamaka") and LOVE_HTML is not None:
                 self.send_response(200)
                 self.send_header("Content-Type", "text/html; charset=utf-8")
