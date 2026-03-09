@@ -41,13 +41,25 @@ SUBSCRIBERS_PATH = Path(__file__).parent / "subscribers.json"
 
 def _run_health_server(port: int) -> None:
     ROOT_HTML = b"""<!DOCTYPE html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MBA Schedule Bot</title></head>
-<body style="font-family:system-ui,sans-serif;max-width:32rem;margin:3rem auto;padding:0 1rem;color:#333;">
-<h1 style="font-size:1.25rem;">MBA Schedule Telegram Bot</h1>
-<p>This app is running. It sends daily reminders and answers commands in Telegram.</p>
-<p>Use the bot inside Telegram; this URL is only for health checks and status.</p>
-<p style="margin-top:2rem;font-size:0.9rem;color:#666;"><a href="/health">/health</a> &rarr; {"status":"ok"} &nbsp; <a href="/love">/love</a> &rarr; for Chiamaka</p>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MBA Schedule Bot</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, 'Times New Roman', serif; background: #faf8f5; color: #2c2522; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  .card { max-width: 28rem; text-align: center; }
+  .card h1 { font-size: 1.125rem; font-weight: 600; color: #2c2522; margin-bottom: 0.5rem; }
+  .card p { font-size: 0.95rem; line-height: 1.6; color: #5a524e; }
+  .card .links { margin-top: 2rem; font-size: 0.875rem; }
+  .card .links a { color: #8b4d5a; text-decoration: none; }
+  .card .links a:hover { text-decoration: underline; }
+  .card .links span { color: #999; margin: 0 0.5rem; }
+</style></head>
+<body>
+<div class="card">
+  <h1>MBA Schedule Telegram Bot</h1>
+  <p>Built by Christopher Uzochukwu for his wife — for her MBA program at Vancouver Island University, Nanaimo. Sends daily reminders and answers commands in Telegram.</p>
+  <p class="links"><a href="/love">For Chiamaka</a> <span>&middot;</span> <a href="/health">Health</a></p>
+</div>
 </body></html>
 """
     love_page_path = Path(__file__).parent / "chiamaka-page" / "index.html"
